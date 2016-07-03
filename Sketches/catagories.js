@@ -2,12 +2,13 @@ var cataSketch = function(c){
 
 
 //button class
-function rectButton(x,y,w,h,loc){
+function rectButton(x,y,w,h,loc,pic){
   this.x = x;
   this.y = y;
   this.w = w;
   this.h = h;
   this.loc = loc;
+  this.pic = c.loadImage(pic);
   this.isPressed = false;
   this.hit = false;
 
@@ -41,6 +42,7 @@ function rectButton(x,y,w,h,loc){
     c.strokeWeight(4);
     c.rectMode();
     c.rect(this.x,this.y,this.w,this.h);
+    c.image(this.pic,this.x, this.y,this.h, this.h);
   }
 }
 function createButtons(){
@@ -48,11 +50,11 @@ function createButtons(){
   var buffer = c.height/32;
   var buttonHeight = ((c.height/4*3)/5)-buffer;
   var buttonWidth = c.width/2-c.width/8;
-  buttons[0] = new rectButton(c.width/16,c.height/4,buttonWidth,buttonHeight,"gallery1.html");
-  buttons[1] = new rectButton(c.width/16,c.height/4+buttonHeight+buffer,buttonWidth,buttonHeight,"gallery2.html");
-  buttons[2] = new rectButton(c.width/16,c.height/4+2*(buttonHeight+buffer),buttonWidth,buttonHeight,"gallery3.html");
-  buttons[3] = new rectButton(c.width/16,c.height/4+3*(buttonHeight+buffer),buttonWidth,buttonHeight,"gallery4.html");
-  buttons[4] = new rectButton(c.width/16,c.height/4+4*(buttonHeight+buffer),buttonWidth,buttonHeight,"gallery5.html");
+  buttons[0] = new rectButton(c.width/16,c.height/4,buttonWidth,buttonHeight,"gallery1.html","Images/Artwork_Icon.png");
+  buttons[1] = new rectButton(c.width/16,c.height/4+buttonHeight+buffer,buttonWidth,buttonHeight,"gallery2.html","Images/Media_Icon.png");
+  buttons[2] = new rectButton(c.width/16,c.height/4+2*(buttonHeight+buffer),buttonWidth,buttonHeight,"gallery3.html","Images/Music_Icon.png");
+  buttons[3] = new rectButton(c.width/16,c.height/4+3*(buttonHeight+buffer),buttonWidth,buttonHeight,"gallery4.html","Images/Photo_Icon.png");
+  buttons[4] = new rectButton(c.width/16,c.height/4+4*(buttonHeight+buffer),buttonWidth,buttonHeight,"gallery5.html","Images/Video_Icon.png");
 }
 //declare buttons
 var buttons = [];

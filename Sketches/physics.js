@@ -99,7 +99,7 @@ function Rope (x,y,segCount,sw,sh) {
 	}
 
 	this.display = function() {
-		p.fill(0);
+		p.fill(150);
 		p.noStroke();
 
 		var leftPoints = [];
@@ -138,13 +138,18 @@ function Invisibox(){
   this.body = world.CreateBody(bd);
 }
 
-function Bobble(x,y,bColor){
-  this.bRope = new Rope(x,y,p.round(p.random(8,14)),4,10);
+function Bobble(x,y,bColor,loc){
+  var segH = 10;
+  var segC = p.round(p.random(14,20));
+  this.bRope = new Rope(x,y,segC,4,segH);
   var dim = p.round(p.random(38,50));
-	this.bBox = new Box(x,y+100,dim,dim,bColor);
+  this.bBox = new Box(x,y+dim/3+segH*segC,dim,dim,bColor);
+  this.loc = loc;
+  this.isPressed = false;
 
-  // this.bRope = new Rope(x,y,10,4,10);
-  // this.bBox = new Box(x,y+100,32,32,bColor);
+  this.isClicked = function(){
+      window.location.href = this.loc;
+  }
 
   this.display = function(){
     this.bBox.display();
@@ -258,11 +263,11 @@ function createBobbles(){
   var color1 = p.color(0);
   var color2 = p.color(150);
 
-  bobbles[0] = new Bobble(p.width/2-2*spacing,20,color1);
-  bobbles[1] = new Bobble(p.width/2-spacing,20,color1);
-  bobbles[2] = new Bobble(p.width/2,20,color1);
-  bobbles[3] = new Bobble(p.width/2+spacing,20,color1);
-  bobbles[4] = new Bobble(p.width/2+2*spacing,20,color1);
+  bobbles[0] = new Bobble(p.width/2-2*spacing,0,color1,"https://twitter.com/trek_h");
+  bobbles[1] = new Bobble(p.width/2-spacing,0,color1,"https://www.instagram.com/treksta/");
+  bobbles[2] = new Bobble(p.width/2,0,color1,"http://treko.me/");
+  bobbles[3] = new Bobble(p.width/2+spacing,0,color1,"https://soundcloud.com/trek_h");
+  bobbles[4] = new Bobble(p.width/2+2*spacing,0,color1,"https://www.youtube.com/trekobius");
 }
 
 var mSpring;
@@ -301,11 +306,18 @@ p.draw = function(){
 
 p.mouseReleased = function() {
   mSpring.destroy();
+  for (var i = 0; i < bobbles.length; i++) {
+		if (bobbles[i].bBox.contains(p.mouseX, p.mouseY) && bobbles[i].isPressed) {
+			bobbles[i].isClicked();
+		}
+    bobbles[i].isPressed = false;
+  }
 }
 
 p.mousePressed = function() {
   for (var i = 0; i < bobbles.length; i++) {
 		if (bobbles[i].bBox.contains(p.mouseX, p.mouseY)) {
+      bobbles[i].isPressed = true;
 			mSpring.bind(p.mouseX,p.mouseY,bobbles[i].bBox);
 		}
   }

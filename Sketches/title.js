@@ -4,7 +4,7 @@ var img;
 
 t.setup = function() {
 	var titleCanvas = t.createCanvas(window.innerWidth,window.innerHeight);
-	img = t.loadImage("Images/trekosphere.png");
+	img = t.loadImage("Images/trekosphere2.png");
 }
 
 t.draw = function(){
