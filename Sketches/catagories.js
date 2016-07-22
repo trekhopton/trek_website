@@ -39,7 +39,7 @@ function rectButton(x,y,w,h,loc,pic){
   this.display = function(){
     c.fill(50,200,250);
     //c.stroke(0,150,200);
-    c.strokeWeight(4);
+    c.strokeWeight(1);
     c.rectMode();
     c.rect(this.x,this.y,this.w,this.h);
     c.image(this.pic,this.x, this.y,this.h, this.h);

@@ -138,12 +138,13 @@ function Invisibox(){
   this.body = world.CreateBody(bd);
 }
 
-function Bobble(x,y,bColor,loc){
+function Bobble(x,y,bColor,loc,pic){
   var segH = 10;
   var segC = p.round(p.random(14,20));
+  this.pic = pic;
   this.bRope = new Rope(x,y,segC,4,segH);
   var dim = p.round(p.random(38,50));
-  this.bBox = new Box(x,y+dim/3+segH*segC,dim,dim,bColor);
+  this.bBox = new Box(x,y+dim/3+segH*segC,dim,dim,bColor,pic);
   this.loc = loc;
   this.isPressed = false;
 
@@ -175,10 +176,11 @@ function Bobble(x,y,bColor,loc){
 	ropeToBox = world.CreateJoint(jd);
 }
 
-function Box(x, y, w_, h_,boxColour) {
+function Box(x, y, w_, h_,boxColour,pic) {
 
 	this.w = w_;
 	this.h = h_;
+  this.pic = pic;
 
 	// Define a body
 	var bd = new box2d.b2BodyDef();
@@ -215,14 +217,24 @@ function Box(x, y, w_, h_,boxColour) {
 		var a = this.body.GetAngleRadians();
 
 		// Draw it!
+    if(this.pic != ""){
+      p.imageMode(p.CENTER);
+  		p.push();
+  		p.translate(pos.x,pos.y);
+  		p.rotate(a);
+      p.scale(-1,-1);
+  		p.image(this.pic,0,0,this.w,this.h);
+  		p.pop();
+    } else {
 		p.noStroke();
-		p.rectMode(p.CENTER);
-		p.push();
-		p.translate(pos.x,pos.y);
-		p.rotate(a);
-		p.fill(boxColour);
-		p.rect(0, 0, this.w, this.h);
-		p.pop();
+      p.rectMode(p.CENTER);
+  		p.push();
+  		p.translate(pos.x,pos.y);
+  		p.rotate(a);
+  		p.fill(boxColour);
+      p.rect(0,0,this.w,this.h);
+  		p.pop();
+    }
 	}
 }
 
@@ -258,16 +270,16 @@ var boundaries = [];
 var world;
 var bobbles = [];
 
-function createBobbles(){
+function createBobbles(twitter,youtube,soundcloud,facebook,instagram){
   var spacing = 50;
   var color1 = p.color(0);
   var color2 = p.color(150);
 
-  bobbles[0] = new Bobble(p.width/2-2*spacing,0,color1,"https://twitter.com/trek_h");
-  bobbles[1] = new Bobble(p.width/2-spacing,0,color1,"https://www.instagram.com/treksta/");
-  bobbles[2] = new Bobble(p.width/2,0,color1,"http://treko.me/");
-  bobbles[3] = new Bobble(p.width/2+spacing,0,color1,"https://soundcloud.com/trek_h");
-  bobbles[4] = new Bobble(p.width/2+2*spacing,0,color1,"https://www.youtube.com/trekobius");
+  bobbles[0] = new Bobble(p.width/2-2*spacing,0,color1,"https://twitter.com/trek_h",twitter);
+  bobbles[1] = new Bobble(p.width/2-spacing,0,color1,"https://www.instagram.com/treksta/",instagram);
+  bobbles[2] = new Bobble(p.width/2,0,color1,"https://facebook.com/",facebook);
+  bobbles[3] = new Bobble(p.width/2+spacing,0,color1,"https://soundcloud.com/trek_h",soundcloud);
+  bobbles[4] = new Bobble(p.width/2+2*spacing,0,color1,"https://www.youtube.com/trekobius",youtube);
 }
 
 var mSpring;
@@ -284,8 +296,13 @@ p.setup = function() {
   boundaries[2] = new Boundary(p.width,p.height/2,0,p.height);
   boundaries[3] = new Boundary(0,p.height/2,0,p.height);
   invisibox = new Invisibox();
-  createBobbles();
-  box1 = new Box(p.width/2,p.height/2,p.width/20,p.width/20,p.color(20,200,255));
+  var twitter = p.loadImage("Images/twitter.jpg");
+  var youtube = p.loadImage("Images/youtube.jpg");
+  var facebook = p.loadImage("Images/facebook.jpg");
+  var instagram = p.loadImage("Images/instagram.jpg");
+  var soundcloud = p.loadImage("Images/soundcloud.jpg");
+  createBobbles(twitter,youtube,soundcloud,facebook,instagram);
+  box1 = new Box(p.width/2,p.height/2,p.width/20,p.width/20,p.color(20,200,255),"");
 	mSpring = new Spring();
 }
 //draw
