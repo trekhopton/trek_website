@@ -10,7 +10,12 @@ t.setup = function() {
 t.draw = function(){
   t.clear();
   // draw title
-  t.image(img,t.width/16,t.height/8-img.height/2);
+	t.imageMode(t.CENTER);
+  t.image(img,t.width/2,img.height/2);
+}
+
+t.windowResized = function(){
+	t.resizeCanvas(window.innerWidth,window.innerHeight);
 }
 
 }

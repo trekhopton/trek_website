@@ -23,7 +23,7 @@ function Spring(x,y) {
       var v1 = scaleToPixels(posA.x, posA.y);
       var v2 = scaleToPixels(posB.x, posB.y);
       // And just draw a line
-	    p.stroke(200);
+	    p.noStroke();
       p.line(v1.x,v1.y,v2.x,v2.y);
     }
   }
@@ -99,7 +99,7 @@ function Rope (x,y,segCount,sw,sh) {
 	}
 
 	this.display = function() {
-		p.fill(150);
+		p.fill(150,100);
 		p.noStroke();
 
 		var leftPoints = [];
@@ -140,10 +140,10 @@ function Invisibox(){
 
 function Bobble(x,y,bColor,loc,pic){
   var segH = 10;
-  var segC = p.round(p.random(14,20));
+  var segC = p.round(p.random(12,15));
   this.pic = pic;
   this.bRope = new Rope(x,y,segC,4,segH);
-  var dim = p.round(p.random(38,50));
+  var dim = p.round(p.random(42,56));
   this.bBox = new Box(x,y+dim/3+segH*segC,dim,dim,bColor,pic);
   this.loc = loc;
   this.isPressed = false;
@@ -153,8 +153,8 @@ function Bobble(x,y,bColor,loc,pic){
   }
 
   this.display = function(){
-    this.bBox.display();
     this.bRope.display();
+    this.bBox.display();
   }
 
 	var jd = new box2d.b2RevoluteJointDef();
@@ -218,15 +218,19 @@ function Box(x, y, w_, h_,boxColour,pic) {
 
 		// Draw it!
     if(this.pic != ""){
+      p.strokeWeight(4);
+      p.stroke(0);
       p.imageMode(p.CENTER);
   		p.push();
   		p.translate(pos.x,pos.y);
   		p.rotate(a);
       p.scale(-1,-1);
+      p.rect(0,0,this.w,this.h);
   		p.image(this.pic,0,0,this.w,this.h);
   		p.pop();
     } else {
-		p.noStroke();
+      p.strokeWeight(2);
+      p.stroke(0);
       p.rectMode(p.CENTER);
   		p.push();
   		p.translate(pos.x,pos.y);
@@ -290,7 +294,7 @@ var cataCanvas
 p.setup = function() {
 	cataCanvas = p.createCanvas(window.innerWidth,window.innerHeight);
 	world = createWorld();
-  p.randomSeed(214563);
+  p.randomSeed(88888888);
   boundaries[0] = new Boundary(p.width/2,p.height,p.width,0);
   boundaries[1] = new Boundary(p.width/2,0,p.width,0);
   boundaries[2] = new Boundary(p.width,p.height/2,0,p.height);
