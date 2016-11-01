@@ -1,27 +1,16 @@
 var backSketch = function(b){
 
-  var tone0;
-  var tone1;
-  var tone2;
-  var tone3;
-
   var trees = [];
 
   var treesPerRow = 20;
 
   b.setup = function() {
     var backCanvas = b.createCanvas(window.innerWidth, window.innerHeight);
-    b.strokeWeight(1);
-    b.frameRate(1);
-    b.randomSeed(0528);
-
-    tone0 = b.color(b.round(b.random(0, 50)));
-    tone1 = b.color(b.round(b.random(60, 150)));
-    tone2 = b.color(b.round(b.random(160, 200)));
-    tone3 = b.color(b.round(b.random(205, 255)));
+    b.strokeWeight(2);
+    b.randomSeed(5475);
 
     for(var i = 0; i < treesPerRow; i++){
-      trees[i] = new tree(i*b.width/treesPerRow,b.height*0.9,100,tone1);
+      trees[i] = new tree(i*b.width/treesPerRow,b.height*0.9,100,tone(0));
     }
 
   }
@@ -102,6 +91,28 @@ var backSketch = function(b){
         b.pop();
       }
     }
+  }
+
+  function tone(inc){
+    var tone;
+    switch(inc){
+      case 0:
+        tone = b.color(b.round(b.random(0, 50)));
+        break;
+      case 1:
+        tone = b.color(b.round(b.random(60, 150)));
+        break;
+      case 2:
+        tone = b.color(b.round(b.random(160, 200)));
+        break;
+      case 3:
+        tone = b.color(b.round(b.random(205, 255)));
+        break;
+      default:
+        tone = b.color(255,100,100);
+        break;
+    }
+    return tone;
   }
 
   b.windowResized = function(){
