@@ -16,6 +16,7 @@ var backSketch = function(b){
 
   b.setup = function() {
     var backCanvas = b.createCanvas(window.innerWidth, window.innerHeight);
+    b.frameRate(24);
     b.randomSeed(5359);
     var bgTone = 200;
     bgColor = b.color(bgTone);
@@ -36,6 +37,7 @@ var backSketch = function(b){
   }
 
   b.draw = function() {
+    console.log(b.frameRate());
     b.background(bgColor);
 
     // wind
@@ -49,84 +51,91 @@ var backSketch = function(b){
 
   function tree(posx, posy, trunkLength, trunkGirth, color){
 
-    //var baseAngle = b.randomGaussian(b.PI, b.PI/16);
-    var baseAngle = b.random(b.PI, b.PI+b.PI/16);
+    var baseAngle = b.random(b.PI, b.PI-b.PI/16);
     var branchCont1 = new branch(trunkLength, trunkGirth, 0);
-    
-    this.display = function(currentWind){
-      //go to position
-      b.translate(posx, posy);
-      b.stroke(color);
 
-      // trunk
-      b.push();
-        b.rotate(baseAngle+currentWind);
-        b.strokeWeight(trunkGirth);
-        b.line(0,0,0,trunkLength);
-        b.translate(0,trunkLength);
-        branchCont1.display();
-      b.pop();
+    // init the graphic for this tree
+    var graphicWidth = 400;
+    var graphic = b.createGraphics(graphicWidth, 1000);
 
-      b.translate(-posx, -posy);
-    }
-  }
+    //move over a little on the graphic
+    graphic.translate(graphicWidth-trunkGirth, 0);
+    //set color
+    graphic.stroke(color);
+    // trunk
+    graphic.push();
+      graphic.rotate(-baseAngle);
+      graphic.strokeWeight(trunkGirth);
+      graphic.line(0,0,0,-trunkLength);
+      graphic.translate(0,-trunkLength);
+      branchCont1.render();
+    graphic.pop();
 
+    graphic.translate(-trunkGirth, 0);
 
-  // recursive branches
-  function branch(baseLength, baseGirth, segNo){
+    // recursive branches
+    function branch(baseLength, baseGirth, segNo){
 
-    //model
+      // weighting of how often splits should happen
+      var splits = [1,1,1,2,2,2,2,3,3,4];
+      var split = splits[b.round(b.random(0,9))];
 
-    // weighting of how often splits should happen
-    var splits = [1,1,1,2,2,2,2,3,3,4];
-    var split = splits[b.round(b.random(0,9))];
-
-    // base case
-    // if the number of segments in a branch is more than the max
-    // or if there are 0 splits made
-    var maxBranchSeg = 5;
-    if(segNo >= maxBranchSeg || split == 0){
-      this.display = function(){}
-      return;
-    }
-    segNo++;
-
-    //branch continued
-    var length = baseLength*b.random(0.95, 0.99);
-    var girth = baseGirth*0.7;
-    var angle = b.random(b.PI/16);
-    var branchCont = new branch(length*b.random(0.7, 0.9), girth, segNo);
-    // branch/es split off
-    var branches = [];
-    var angles = [];
-    var lengths = [];
-    for(var i = 0; i < split-1; i++){
-      lengths[i] = baseLength*b.random(0.4, 0.5);
-      angles[i] = b.random(0, b.PI/3);
-      branches.push(new branch(lengths[i]*b.random(0.5, 0.9), girth, segNo));
-    }
-
-    //display / view
-    this.display = function(){
-
-      // branch continued
-      b.push();
-        b.rotate(angle);
-        b.strokeWeight(girth);
-        b.line(0,0,0,length);
-        b.translate(0,length);
-        branchCont.display();
-      b.pop();
-      // branch/es split off
-      for(var i = 0; i < split-1; i++){
-        b.push();
-          b.rotate(angles[i]);
-          b.strokeWeight(girth);
-          b.line(0,0,0,lengths[i]);
-          b.translate(0,lengths[i]);
-          branches[i].display();
-        b.pop();
+      // base case
+      // if the number of segments in a branch is more than the max
+      // or if there are 0 splits made
+      var maxBranchSeg = 5;
+      if(segNo >= maxBranchSeg || split == 0){
+        this.render = function(){}
+        return;
       }
+      segNo++;
+
+      //branch continued
+      var length = baseLength*b.random(0.95, 0.99);
+      var girth = baseGirth*0.7;
+      var angle = b.random(-b.PI/16);
+      var branchCont = new branch(length*b.random(0.7, 0.9), girth, segNo);
+      // branch/es split off
+      var branches = [];
+      var angles = [];
+      var lengths = [];
+      for(var i = 0; i < split-1; i++){
+        lengths[i] = baseLength*b.random(0.4, 0.5);
+        angles[i] = b.random(0, -b.PI/3);
+        branches.push(new branch(lengths[i]*b.random(0.5, 0.9), girth, segNo));
+      }
+
+      // branch display / view
+      this.render = function(){
+        // branch continued
+        graphic.push();
+          graphic.rotate(-angle);
+          graphic.strokeWeight(girth);
+          graphic.line(0,0,0,-length);
+          graphic.translate(0,-length);
+          branchCont.render();
+        graphic.pop();
+        // branch/es split off
+        for(var i = 0; i < split-1; i++){
+          graphic.push();
+            graphic.rotate(-angles[i]);
+            graphic.strokeWeight(girth);
+            graphic.line(0,0,0,-lengths[i]);
+            graphic.translate(0,-lengths[i]);
+            branches[i].render();
+          graphic.pop();
+        }
+      }
+    }
+    //branch end
+
+    this.display = function(currentWind){
+      b.push();
+      b.translate(posx, posy);
+      b.rotate(b.PI+currentWind);
+      b.translate(-graphicWidth+trunkGirth, 0);
+      b.image(graphic, 0, 0);
+      b.pop();
     }
   }
 
