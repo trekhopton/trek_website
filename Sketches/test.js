@@ -4,17 +4,18 @@ var testSketch = function(test){
 test.setup = function() {
 
 	var testCanvas = test.createCanvas(window.innerWidth,window.innerHeight);
-	world = createWorld();
-
-
 
 }
 //draw
+var period = 0;
 test.draw = function(){
-  var timeStep = 1.0/30;
-  world.Step(timeStep,10,10);
 
-  test.clear();
+	test.clear();
+
+	var posY = test.sin(period)*100;
+	period += test.PI/20;
+	test.ellipse(0,posY,200,200);
+
 }
 
 

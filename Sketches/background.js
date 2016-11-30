@@ -12,9 +12,10 @@ var backSketch = function(b){
 
   var bgColor;
 
+  var myWind = new wind();
+
   b.setup = function() {
     var backCanvas = b.createCanvas(window.innerWidth, window.innerHeight);
-    b.frameRate(10);
     b.randomSeed(5359);
     var bgTone = 200;
     bgColor = b.color(bgTone);
@@ -36,8 +37,13 @@ var backSketch = function(b){
 
   b.draw = function() {
     b.background(bgColor);
+
+    // wind
+    myWind.update();
+
     for(var i = 0; i < trees.length; i++){
-      trees[i].display();
+      // display each tree with the current wind
+      trees[i].display(myWind.wind);
     }
   }
 
@@ -46,15 +52,15 @@ var backSketch = function(b){
     //var baseAngle = b.randomGaussian(b.PI, b.PI/16);
     var baseAngle = b.random(b.PI, b.PI+b.PI/16);
     var branchCont1 = new branch(trunkLength, trunkGirth, 0);
-
-    this.display = function(){
+    
+    this.display = function(currentWind){
       //go to position
       b.translate(posx, posy);
       b.stroke(color);
 
       // trunk
       b.push();
-        b.rotate(baseAngle);
+        b.rotate(baseAngle+currentWind);
         b.strokeWeight(trunkGirth);
         b.line(0,0,0,trunkLength);
         b.translate(0,trunkLength);
@@ -124,27 +130,20 @@ var backSketch = function(b){
     }
   }
 
-  function tone(inc){
-    var tone;
-    switch(inc){
-      case 0:
-        tone = b.color(b.round(b.random(0, 50)));
-        break;
-      case 1:
-        tone = b.color(b.round(b.random(60, 150)));
-        break;
-      case 2:
-        tone = b.color(b.round(b.random(160, 200)));
-        break;
-      case 3:
-        tone = b.color(b.round(b.random(205, 255)));
-        break;
-      default:
-        tone = b.color(255,100,100);
-        break;
+  function wind(){
+
+    var period = 0;
+    var amp = 0.02;
+    this.wind;
+
+    this.update = function(){
+      period += b.PI/20;
+      this.wind = b.sin(period)*amp;
     }
-    return tone;
+
+
   }
+
 
   b.windowResized = function(){
     b.resizeCanvas(window.innerWidth, window.innerHeight);
