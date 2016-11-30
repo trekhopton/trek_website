@@ -17,10 +17,11 @@ var backSketch = function(b){
   b.setup = function() {
     var backCanvas = b.createCanvas(window.innerWidth, window.innerHeight);
     b.frameRate(24);
-    b.randomSeed(5359);
+    b.randomSeed(5249);
     var bgTone = 200;
     bgColor = b.color(bgTone);
-    var treeCount = 180;
+    //initialising trees
+    var treeCount = 120;
     for(var i = 0; i < treeCount; i++){
       var minDist = b.height*0.9;
       var maxDist = b.height*1.4;
@@ -83,7 +84,7 @@ var backSketch = function(b){
       // base case
       // if the number of segments in a branch is more than the max
       // or if there are 0 splits made
-      var maxBranchSeg = 5;
+      var maxBranchSeg = 7;
       if(segNo >= maxBranchSeg || split == 0){
         this.render = function(){}
         return;
@@ -146,7 +147,7 @@ var backSketch = function(b){
     this.wind;
 
     this.update = function(){
-      period += b.PI/20;
+      period += b.PI/30;
       this.wind = b.sin(period)*amp;
     }
 
