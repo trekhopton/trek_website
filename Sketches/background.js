@@ -25,37 +25,39 @@ var backSketch = function(b){
   b.setup = function() {
     var backCanvas = b.createCanvas(window.innerWidth, window.innerHeight);
     b.frameRate(30);
-    b.randomSeed(55639);
+    b.randomSeed(92487);
     b.colorMode(b.HSB);
     //background color
-    bgHue = 180;
+    bgHue = 0;
     bgSat = 0;
     bgBright = 90;
     bgColor = b.color(bgHue, bgSat, bgBright);
     //water color
-    wHue = 180;
+    wHue = 200;
     wSat = 40;
-    wBright = 90;
+    wBright = 50;
     wColor = b.color(wHue, wSat, wBright);
     //initialising trees
-    var treeCount = 120;
+    var treeCount = 100;
     for(var i = 0; i < treeCount; i++){
-      var minDist = b.height*0.5;
-      var maxDist = b.height*1.4;
-      var iTreePosX = b.random(-b.width/10, b.width);
-      var iTreePosY = b.map(i, 0, treeCount, minDist, maxDist)-iTreePosX/2;
+      var minDist = b.height*0.4;
+      var maxDist = b.height*1.3;
+      // use this for uniform x pos
+      //var iTreePosX = b.random(-b.width/10, b.width);
+      var iTreePosX = b.random(-b.width/10, b.width) * b.map(i, 0, treeCount, 1, 0.3);
+      var iTreePosY = b.map(i, 0, treeCount, minDist, maxDist);
       var lengthMin = 20;
       var lengthMax = 200;
       var iTreeLength = b.random(lengthMin, lengthMax);
       var iTreeGirth = b.map(iTreeLength, lengthMin, lengthMax, 1, 8);
-      var iTreeColor = b.color(0, 0, b.map(iTreePosY, minDist-iTreePosX/2, maxDist, bgBright, 0));
+      var iTreeColor = b.color(0, 0, b.map(iTreePosY, minDist, maxDist, bgBright, 0));
       trees[i] = new tree(iTreePosX, iTreePosY, iTreeLength, iTreeGirth, iTreeColor);
     }
 
   }
 
   b.draw = function() {
-    console.log(b.frameRate());
+    //console.log(b.frameRate());
     b.background(bgColor);
 
     for(var i = 0; i < trees.length; i++){
@@ -64,7 +66,7 @@ var backSketch = function(b){
     //water gradient
     for(var i = 0; i < b.height; i++) {
       var step = b.map(i, 0, b.height, 0, 1);
-      var iColor = b.color(b.lerp(bgHue, wHue, step), b.lerp(bgSat, wSat, step), b.lerp(bgBright, bgBright, step), 0.35);
+      var iColor = b.color(b.lerp(bgHue, wHue, step), b.lerp(bgSat, wSat, step), b.lerp(bgBright, bgBright, step), 0.4);
       b.stroke(iColor);
       b.line(0, i, b.width, i);
     }
