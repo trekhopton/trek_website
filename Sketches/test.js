@@ -6,7 +6,7 @@ var graphics;
 test.setup = function() {
 	var testCanvas = test.createCanvas(window.innerWidth,window.innerHeight);
 		length = 1000;
-		graphics = test.createGraphics(test.width, test.height);
+		graphics = test.createGraphics(test.width/2, test.height/2);
 		graphics.translate(length, length);
 		graphics.ellipse(0, 0, 100, 100);
 		graphics.translate(length, length);

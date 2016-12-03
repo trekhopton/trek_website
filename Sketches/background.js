@@ -3,13 +3,12 @@ var backSketch = function(b){
   //
   //notes
   //
-  //angle perlin noise for gentle breeze
-  //reflection of trees in water
   //mouse moves trees
   //maybe shapes instead of lines
+  //ripples?
 
   var trees = [];
-
+  var treeCount;
   var bgColor;
 
   var bgHue;
@@ -24,21 +23,22 @@ var backSketch = function(b){
 
   b.setup = function() {
     var backCanvas = b.createCanvas(window.innerWidth, window.innerHeight);
-    b.frameRate(30);
+    b.frameRate(60);
     b.randomSeed(92487);
+    //b.blendMode(b.MULTIPLY );
     b.colorMode(b.HSB);
     //background color
     bgHue = 0;
     bgSat = 0;
-    bgBright = 90;
+    bgBright = 100;
     bgColor = b.color(bgHue, bgSat, bgBright);
     //water color
     wHue = 200;
-    wSat = 40;
+    wSat = 70;
     wBright = 50;
     wColor = b.color(wHue, wSat, wBright);
     //initialising trees
-    var treeCount = 100;
+    treeCount = 100;
     for(var i = 0; i < treeCount; i++){
       var minDist = b.height*0.4;
       var maxDist = b.height*1.3;
@@ -50,14 +50,15 @@ var backSketch = function(b){
       var lengthMax = 200;
       var iTreeLength = b.random(lengthMin, lengthMax);
       var iTreeGirth = b.map(iTreeLength, lengthMin, lengthMax, 1, 8);
-      var iTreeColor = b.color(0, 0, b.map(iTreePosY, minDist, maxDist, bgBright, 0));
+      var iTreeColor = b.color(150, b.map(iTreePosY, minDist, maxDist, 0, 70), b.map(iTreePosY, minDist, maxDist, bgBright, 0));
       trees[i] = new tree(iTreePosX, iTreePosY, iTreeLength, iTreeGirth, iTreeColor);
     }
 
   }
 
   b.draw = function() {
-    //console.log(b.frameRate());
+    // console.log(b.frameRate());
+    b.clear();
     b.background(bgColor);
 
     for(var i = 0; i < trees.length; i++){
@@ -104,7 +105,6 @@ var backSketch = function(b){
 
     // recursive branches
     function branch(baseLength, baseGirth, segNo){
-
       // weighting of how often splits should happen
       var splits = [1,1,1,2,2,2,2,3,3,4];
       var split = splits[b.round(b.random(0,9))];
@@ -193,7 +193,7 @@ var backSketch = function(b){
 
     this.update = function(posx){
       phase = posx/800;
-      period += b.PI/15000; // should make this loop
+      period += b.PI/30000; // should make this loop
       this.wind = b.sin(period-phase)*amp;
     }
   }
