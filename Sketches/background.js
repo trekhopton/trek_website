@@ -4,17 +4,16 @@ var backSketch = function(b){
   //notes
   //
   //mouse moves trees
-  //maybe shapes instead of lines
-  //ripples?
 
   var trees = [];
   var treeCount;
+  // background color
   var bgColor;
-
   var bgHue;
   var bgSat;
   var bgBright;
-
+  // water graphic and color
+  var waterGraphic;
   var wHue;
   var wSat;
   var wBright;
@@ -22,6 +21,7 @@ var backSketch = function(b){
   var myWind = new wind();
 
   b.setup = function() {
+    b.pixelDensity(1);
     var backCanvas = b.createCanvas(window.innerWidth, window.innerHeight);
     b.frameRate(60);
     b.randomSeed(92487);
@@ -32,11 +32,22 @@ var backSketch = function(b){
     bgSat = 0;
     bgBright = 100;
     bgColor = b.color(bgHue, bgSat, bgBright);
-    //water color
+    //water color at base
     wHue = 200;
     wSat = 70;
     wBright = 50;
     wColor = b.color(wHue, wSat, wBright);
+
+    //pre-rendering water gradient
+    waterGraphic = b.createGraphics(b.width, b.height);
+    waterGraphic.colorMode(waterGraphic.HSB);
+    for(var i = 0; i < waterGraphic.height; i++) {
+      var step = waterGraphic.map(i, 0, waterGraphic.height, 0, 1);
+      var iColor = waterGraphic.color(waterGraphic.lerp(bgHue, wHue, step), waterGraphic.lerp(bgSat, wSat, step), waterGraphic.lerp(bgBright, bgBright, step), 0.4);
+      waterGraphic.stroke(iColor);
+      waterGraphic.line(0, i, waterGraphic.width, i);
+    }
+
     //initialising trees
     treeCount = 100;
     for(var i = 0; i < treeCount; i++){
@@ -64,13 +75,8 @@ var backSketch = function(b){
     for(var i = 0; i < trees.length; i++){
       trees[i].displayReflection();
     }
-    //water gradient
-    for(var i = 0; i < b.height; i++) {
-      var step = b.map(i, 0, b.height, 0, 1);
-      var iColor = b.color(b.lerp(bgHue, wHue, step), b.lerp(bgSat, wSat, step), b.lerp(bgBright, bgBright, step), 0.4);
-      b.stroke(iColor);
-      b.line(0, i, b.width, i);
-    }
+
+    b.image(waterGraphic, 0, 0);
 
     for(var i = 0; i < trees.length; i++){
       trees[i].display();

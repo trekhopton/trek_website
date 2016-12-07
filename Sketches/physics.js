@@ -251,15 +251,14 @@ var physicsSketch = function(p){
 
   		// Draw it!
       if(this.pic != ""){
-        p.strokeWeight(4);
-        p.stroke(0);
         p.imageMode(p.CENTER);
+        p.noStroke();
     		p.push();
     		p.translate(pos.x,pos.y);
     		p.rotate(angle);
         p.scale(-1,-1);
-        //p.rect(0,0,this.w,this.h);
-        //p.tint(255, 150);
+        p.fill(boxColour);
+        p.rect(0,0,this.w,this.h);
     		p.image(this.pic,0,0,this.w,this.h);
     		p.pop();
       } else {
@@ -305,9 +304,8 @@ var physicsSketch = function(p){
   }
 
   function createBobbles(){
-    var spacing = 50;
-    var color1 = p.color(0);
-    var color2 = p.color(150);
+    var spacing = p.height/20;
+    var color1 = p.color(255, 200);
 
     var twitter = p.loadImage("Images/twitter.png");
     var youtube = p.loadImage("Images/youtube.png");
