@@ -140,7 +140,7 @@ var backSketch = function(b){
         branches.push(new branch(lengths[i]*b.random(0.5, 0.9), girth, segNo));
       }
 
-      // branch display / view
+      // branch graphics render
       this.render = function(){
         // branch continued
         graphic.push();
@@ -164,18 +164,31 @@ var backSketch = function(b){
     }
     //branch end
 
+    //mouse interaction variables
+    var mouseRadius = 200;
+    var posOffset = 100;
+    var maxMovement = b.PI/200;
+    var mouseMove = 0;
+
+    //tree display
     this.display = function(){
       // wind
       myWind.update(posx);
+      //mouse interaction
+      if(b.mouseX > posx + posOffset - mouseRadius && b.mouseX < posx + posOffset + mouseRadius){
+        mouseMove = 2*maxMovement - b.abs(b.map(-2*(posx + posOffset - b.mouseX), -mouseRadius, mouseRadius, -maxMovement, maxMovement));
+      } else {
+        mouseMove = 0;
+      }
       //reeds
       b.push();
       b.translate(posx, posy);
-      b.rotate(-myWind.wind);
+      b.rotate(-myWind.wind+mouseMove);
       b.translate(trunkGirth, -graphicHeight+trunkGirth);
       b.image(graphic, 0, 0);
       b.pop();
     }
-
+    //tree reflection display
     this.displayReflection = function(){
       // wind
       myWind.update(posx);
