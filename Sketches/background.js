@@ -49,20 +49,20 @@ var backSketch = function(b){
     }
 
     //initialising trees
-    treeCount = 100;
+    treeCount = 80;
     for(var i = 0; i < treeCount; i++){
       var minDist = b.height*0.4;
       var maxDist = b.height*1.3;
       // use this for uniform x pos
-      //var iTreePosX = b.random(-b.width/10, b.width);
-      var iTreePosX = b.random(-b.width/10, b.width) * b.map(i, 0, treeCount, 1, 0.3);
-      var iTreePosY = b.map(i, 0, treeCount, minDist, maxDist);
+      //var iTreeposX = b.random(-b.width/10, b.width);
+      var iTreeposX = b.random(-b.width/10, b.width) * b.map(i, 0, treeCount, 1, 0.3);
+      var iTreeposY = b.map(i, 0, treeCount, minDist, maxDist);
       var lengthMin = 20;
       var lengthMax = 200;
       var iTreeLength = b.random(lengthMin, lengthMax);
       var iTreeGirth = b.map(iTreeLength, lengthMin, lengthMax, 1, 8);
-      var iTreeColor = b.color(150, b.map(iTreePosY, minDist, maxDist, 0, 70), b.map(iTreePosY, minDist, maxDist, bgBright, 0));
-      trees[i] = new tree(iTreePosX, iTreePosY, iTreeLength, iTreeGirth, iTreeColor);
+      var iTreeColor = b.color(150, b.map(iTreeposY, minDist, maxDist, 0, 70), b.map(iTreeposY, minDist, maxDist, bgBright, 0));
+      trees[i] = new tree(iTreeposX, iTreeposY, iTreeLength, iTreeGirth, iTreeColor);
     }
 
   }
@@ -84,7 +84,7 @@ var backSketch = function(b){
 
   }
 
-  function tree(posx, posy, trunkLength, trunkGirth, color){
+  function tree(posX, posY, trunkLength, trunkGirth, color){
 
     var baseAngle = b.random(b.PI, b.PI+b.PI/16);
     var branchCont1 = new branch(trunkLength, trunkGirth, 0);
@@ -166,37 +166,45 @@ var backSketch = function(b){
 
     //mouse interaction variables
     var mouseRadius = 200;
-    var posOffset = 100;
+    var posXOffset = 100;
+    var posYOffset = -200;
     var maxMovement = b.PI/200;
     var mouseMove = 0;
+    var mouseMoveX = 0;
+    var mouseMoveY = 0;
+
 
     //tree display
     this.display = function(){
       // wind
-      myWind.update(posx);
+      myWind.update(posX);
       //mouse interaction
-      if(b.mouseX > posx + posOffset - mouseRadius && b.mouseX < posx + posOffset + mouseRadius){
-        mouseMove = 2*maxMovement - b.abs(b.map(-2*(posx + posOffset - b.mouseX), -mouseRadius, mouseRadius, -maxMovement, maxMovement));
+      if(b.mouseX > posX + posXOffset - mouseRadius && b.mouseX < posX + posXOffset + mouseRadius){
+        if(b.mouseY > posY + posYOffset - mouseRadius && b.mouseY < posY + posYOffset + mouseRadius){
+          mouseMoveX = 2*maxMovement - b.abs(b.map(-2*(posX + posXOffset - b.mouseX), -mouseRadius, mouseRadius, -maxMovement, maxMovement));
+          mouseMoveY = 2*maxMovement - b.abs(b.map(-2*(posY + posYOffset - b.mouseY), -mouseRadius, mouseRadius, -maxMovement, maxMovement));
+          mouseMove = b.map(mouseMoveX * mouseMoveY, 0, maxMovement * maxMovement, 0, maxMovement);
+        }
       } else {
         mouseMove = 0;
       }
       //reeds
       b.push();
-      b.translate(posx, posy);
-      b.rotate(-myWind.wind+mouseMove);
-      b.translate(trunkGirth, -graphicHeight+trunkGirth);
+      b.translate(posX, posY);
+      b.rotate(-myWind.wind + mouseMove);
+      b.translate(trunkGirth, -graphicHeight + trunkGirth);
       b.image(graphic, 0, 0);
       b.pop();
     }
     //tree reflection display
     this.displayReflection = function(){
       // wind
-      myWind.update(posx);
+      myWind.update(posX);
       //reflection
       b.push();
-      b.translate(posx, posy);
-      b.rotate(b.PI+myWind.wind);
-      b.translate(-trunkGirth, -graphicHeight+trunkGirth);
+      b.translate(posX, posY);
+      b.rotate(b.PI + myWind.wind - mouseMove);
+      b.translate(-trunkGirth, -graphicHeight + trunkGirth);
       b.scale(-1, 1);
       b.image(graphic, 0, 0);
       b.pop();
@@ -210,8 +218,8 @@ var backSketch = function(b){
     var amp = 0.04;
     this.wind;
 
-    this.update = function(posx){
-      phase = posx/800;
+    this.update = function(posX){
+      phase = posX/800;
       period += b.PI/30000; // should make this loop
       this.wind = b.sin(period-phase)*amp;
     }
