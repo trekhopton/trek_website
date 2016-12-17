@@ -3,7 +3,7 @@ var backSketch = function(b){
   //
   //notes
   //
-  //mouse moves trees
+  //make trees images instead of canvases
 
   var trees = [];
   var treeCount;
