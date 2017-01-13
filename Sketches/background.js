@@ -28,7 +28,7 @@ var backSketch = function(b){
     //b.blendMode(b.MULTIPLY );
     b.colorMode(b.HSB);
     //background color
-    bgHue = 0;
+    bgHue = 100;
     bgSat = 0;
     bgBright = 100;
     bgColor = b.color(bgHue, bgSat, bgBright);
