@@ -1,6 +1,5 @@
 var physicsSketch = function(p){
 
-
   var boundaries = [];
   var world;
   var bobbles = [];
