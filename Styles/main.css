@@ -5,7 +5,7 @@ body {
 	z-index: 0;
 }
 
-ul {
+/* ul {
   position: fixed;
   width: 100%;
 	height: 100px;
@@ -16,12 +16,12 @@ ul {
 	background-color: white;
 	opacity: 0.7;
   /*background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7), rgba(0, 0, 0, 0));*/
-}
+} */
 
-li {
+/* li {
 	height: 100%;
 	width: 12%;
-	float: right;
+	float: left;
 }
 
 li a {
@@ -37,7 +37,7 @@ li a {
 
 li a:hover {
 	text-decoration: underline;
-}
+} */
 
 canvas {
 	position: absolute;
@@ -48,4 +48,18 @@ canvas {
 
 #defaultCanvas1 {
 	top: 100%;
+}
+
+header {
+  padding: 154px 0 100px;
+}
+
+@media (min-width: 992px) {
+  header {
+    padding: 156px 0 100px;
+  }
+}
+
+section {
+  padding: 150px 0;
 }
