@@ -2,7 +2,7 @@ body {
 	margin:0;
 	overflow-y: scroll;
 	overflow-x: hidden;
-	z-index: 0;
+	z-index: 1;
 }
 
 /* ul {
@@ -15,7 +15,7 @@ body {
   overflow: hidden;
 	background-color: white;
 	opacity: 0.7;
-  /*background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7), rgba(0, 0, 0, 0));*/
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7), rgba(0, 0, 0, 0));
 } */
 
 /* li {
@@ -39,27 +39,62 @@ li a:hover {
 	text-decoration: underline;
 } */
 
-canvas {
-	position: absolute;
+/* canvas {
 	left:0px;
   top:0px;
-	z-index: -1;
+} */
+
+#defaultCanvas0 {
+	left:0px;
+  top:0px;
+	position: fixed;
+	z-index: -2;
 }
 
 #defaultCanvas1 {
-	top: 100%;
+	left:0px;
+  top:1363px;
+	z-index: -1;
+	position: absolute;
+}
+
+.navbar {
+	background-color: rgba(0,0,0,0.8);
+}
+
+h1{
+	font-size: 72px;
+	margin-bottom: 20px;
+}
+
+h2{
+	font-size: 36px;
 }
 
 header {
-  padding: 154px 0 100px;
+	padding: 381.5px 0 381.5px;
+	background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 300px, rgba(0, 0, 0, 0) 300px);
 }
 
-@media (min-width: 992px) {
+/* @media (min-width: 992px) {
   header {
-    padding: 156px 0 100px;
+    padding: 409.5px 0 353.5px;
   }
+} */
+
+footer {
+	background-color: rgba(0,0,0,0.8);
 }
 
 section {
-  padding: 150px 0;
+	padding: 150px 0;
+	
+}
+
+#mywork {
+	background-color: rgba(255, 255, 255, 0.6);
+}
+
+#contact {
+	padding: 100px 0 593px;
 }

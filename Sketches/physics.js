@@ -10,7 +10,7 @@ var physicsSketch = function(p){
   var cataCanvas
   //setup
   p.setup = function() {
-  	cataCanvas = p.createCanvas(window.innerWidth,window.innerHeight);
+  	cataCanvas = p.createCanvas(window.innerWidth,window.innerHeight-176);
   	world = createWorld();
     p.frameRate(60);
     p.randomSeed(88888888);
