@@ -225,8 +225,8 @@ var backSketch = function(b){
     }
   }
 
-  b.windowResized = function(){
-    b.resizeCanvas(window.innerWidth, window.innerHeight);
-  }
+  // b.windowResized = function(){
+  //   b.resizeCanvas(window.innerWidth, window.innerHeight);
+  // }
 }
 var back_p5 = new p5(backSketch);

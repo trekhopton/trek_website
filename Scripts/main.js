@@ -1,5 +1,4 @@
-(function($) {
-  "use strict"; // Start of use strict
+$(function(){
 
   // Smooth scrolling using jQuery easing
   $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function() {
@@ -26,4 +25,18 @@
     offset: 54
   });
 
-})(jQuery); // End of use strict
+
+  //initialize isotope
+  $('.grid').isotope({
+    // options
+    itemSelector: '.grid-item',
+    layoutMode: 'fitRows'
+  });
+
+  // filter items on button click
+  $('.filter-button-group').on( 'click', 'button', function() {
+    var filterValue = $(this).attr('data-filter');
+    $('.grid').isotope({ filter: filterValue });
+  });
+
+});

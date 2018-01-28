@@ -10,7 +10,7 @@ var physicsSketch = function(p){
   var cataCanvas
   //setup
   p.setup = function() {
-  	cataCanvas = p.createCanvas(window.innerWidth,window.innerHeight-176);
+  	cataCanvas = p.createCanvas(window.innerWidth,window.innerHeight-56-120);
   	world = createWorld();
     p.frameRate(60);
     p.randomSeed(88888888);
@@ -342,7 +342,8 @@ var physicsSketch = function(p){
   }
 
   p.windowResized = function(){
-    cataCanvas.position(window.innerWidth/2-p.width/2,0);
+    cataCanvas.position(window.innerWidth/2-p.width/2, document.getElementById("defaultCanvas1").style.top);
+    
   }
 }
 var physics_p5 = new p5(physicsSketch);
