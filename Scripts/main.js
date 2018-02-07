@@ -27,10 +27,12 @@ $(function(){
 
 
   //initialize isotope
-  $('.grid').isotope({
-    // options
-    itemSelector: '.grid-item',
-    layoutMode: 'fitRows'
+  $('.grid').imagesLoaded( function() {
+    $('.grid').isotope({
+      // options
+      itemSelector: '.grid-item',
+      layoutMode: 'fitRows'
+    });
   });
 
   // filter items on button click

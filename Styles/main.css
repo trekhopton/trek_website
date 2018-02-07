@@ -3,21 +3,32 @@ body {
 	overflow-y: scroll;
 	overflow-x: hidden;
 	z-index: 1;
-	
+	font-family: 'Source Sans Pro',sans-serif;
 }
 
 #defaultCanvas0 {
 	left:0px;
-  top:0px;
+  	top:0px;
 	position: fixed;
 	z-index: -2;
 }
 
-#defaultCanvas1 {
-	left:0px;
-	/* header height plus my work section height */
-  top:calc(200vh - 56px);
-	z-index: -1;
+.inner {
+	padding-top: 120px;
+	padding-bottom: 120px;
+}
+
+.inner-top {
+	padding-top: 120px;
+}
+
+.inner-bottom {
+	padding-bottom: 120px;
+}
+
+#sketch-container {
+	top:-150;
+	z-index: 2;
 	position: absolute;
 }
 
@@ -35,40 +46,46 @@ h1{
 }
 
 h2{
+	font-size: 48px;
+}
+
+h3{
 	font-size: 36px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Lato',sans-serif;
 }
 
 #page-header {
 	height: 100vh;
-	/* padding: 381.5px 0 381.5px; */
 	background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 300px, rgba(0, 0, 0, 0) 300px);
 }
-
-/* @media (min-width: 992px) {
-  header {
-    height: 100%;
-  }
-} */
 
 footer {
 	background-color: rgba(0,0,0,0.8);
 }
 
-section {
-	padding: 150px 0;
-	
+.no-top-border {
+    border-top: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 }
 
-.grid {
-	width: 100%;
+.bordered {
+    border: 1px solid #e6e9ed;
+    border-bottom-width: 2px;
+    border-radius: 3px;
+    padding: 25px;
+    background: #f5f7fa;
 }
 
-.filter {
-	width: 100%;
+.filter-button-group {
+	margin-bottom: 40px;
 }
 
 .grid-item {
-	width: 20%;
+	margin-bottom: 30px;
 }
 
 .grid-item a img {
@@ -76,10 +93,23 @@ section {
 }
 
 #mywork {
-	background-color: rgba(255, 255, 255, 0.6);
-	height: calc(100vh - 56px);
+	background-color: rgba(255, 255, 255, 0.9);
 }
 
 #contact {
+	background-color: rgba(255, 255, 255, 0.6);
 	height: calc(100vh - 56px - 120px);
+}
+
+@media(max-width:600px) {
+	.filter-button-group .btn {
+		display: block;
+		margin:auto;
+	}
+
+	.grid-item {
+		width: 200px;
+		margin-bottom: 10px;
+		margin-left: 10px;
+	}
 }
