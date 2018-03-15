@@ -31,7 +31,7 @@ $(function(){
     $('.grid').isotope({
       // options
       itemSelector: '.grid-item',
-      layoutMode: 'fitRows'
+      layoutMode: 'masonry'
     });
   });
 
@@ -40,5 +40,5 @@ $(function(){
     var filterValue = $(this).attr('data-filter');
     $('.grid').isotope({ filter: filterValue });
   });
-
+  
 });
