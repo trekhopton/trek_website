@@ -56,10 +56,14 @@ h3{
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Lato',sans-serif;
 }
-
+/* big white circle */
 #page-header {
 	height: 100vh;
 	background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 300px, rgba(0, 0, 0, 0) 300px);
+}
+
+#wip-page-header {
+	height: 100vh;
 }
 
 footer {
@@ -97,11 +101,11 @@ footer {
 }
 
 #mywork {
-	background-color: rgba(255, 255, 255, 0.9);
+	background-color: rgba(255, 255, 255, 0.7);
 }
 
 #contact {
-	background-color: rgba(255, 255, 255, 0.6);
+	background-color: rgba(255, 255, 255, 0.9);
 	height: calc(100vh - 56px - 120px);
 }
 
