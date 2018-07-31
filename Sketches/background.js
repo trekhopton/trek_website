@@ -49,16 +49,18 @@ var backSketch = function(b){
     }
 
     //initialising trees
-    treeCount = 80;
+    treeCount = b.round(b.map(b.width,0,1920,10,80));
+    console.log(treeCount);
     for(var i = 0; i < treeCount; i++){
+      //range of where tree bases can land
       var minDist = b.height*0.4;
       var maxDist = b.height*1.3;
       // use this for uniform x pos
       //var iTreeposX = b.random(-b.width/10, b.width);
       var iTreeposX = b.random(-b.width/10, b.width) * b.map(i, 0, treeCount, 1, 0.3);
       var iTreeposY = b.map(i, 0, treeCount, minDist, maxDist);
-      var lengthMin = 20;
-      var lengthMax = 200;
+      var lengthMin = b.map(b.height, 0, 1080, 5, 20);
+      var lengthMax = b.map(b.height, 0, 1080, 20, 200);
       var iTreeLength = b.random(lengthMin, lengthMax);
       var iTreeGirth = b.map(iTreeLength, lengthMin, lengthMax, 1, 8);
       var iTreeColor = b.color(150, b.map(iTreeposY, minDist, maxDist, 0, 70), b.map(iTreeposY, minDist, maxDist, bgBright, 0));
