@@ -38,7 +38,7 @@ var backSketch = function(b){
     wBright = 50;
     wColor = b.color(wHue, wSat, wBright);
 
-    //pre-rendering water gradient
+    //pre-rendering water gradient 
     waterGraphic = b.createGraphics(b.width, b.height);
     waterGraphic.colorMode(waterGraphic.HSB);
     for(var i = 0; i < waterGraphic.height; i++) {
